@@ -11,17 +11,16 @@ import com.example.news.database.utils.DateConverter
 class NewsDatabase internal constructor(private val database: NewsRoomDatabase) {
     val articleDao: ArticleDao
         get() = database.articleDao()
-
 }
 
-@Database(entities = [ArticleDBO::class], version = 1, exportSchema = false)
+@Database(entities = [ArticleDBO::class], version = 1)
 @TypeConverters(DateConverter::class)
 internal abstract class NewsRoomDatabase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
 }
 
 fun NewsDatabase(applicationContext: Context): NewsDatabase {
-    val newsRoomDatabase =  Room.databaseBuilder(
+    val newsRoomDatabase = Room.databaseBuilder(
         checkNotNull(applicationContext.applicationContext),
         NewsRoomDatabase::class.java,
         "news"

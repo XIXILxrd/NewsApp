@@ -8,7 +8,7 @@ import com.example.newsapi.utils.TimeApiKeyInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
@@ -17,19 +17,20 @@ import retrofit2.http.Query
 import java.util.Date
 
 interface NewsApi {
-    @GET("/everything")
+    @Suppress("LongParameterList")
+    @GET("everything")
     suspend fun everything(
         @Query("q") query: String? = null,
         @Query("from") from: Date? = null,
         @Query("to") to: Date? = null,
-        @Query("language") languages: List<Language>? = null,
+        @Query("language") languages: List<@JvmSuppressWildcards Language>? = null,
         @Query("sortBy") sortBy: SortBy? = null,
         @Query("pageSize") pageSize: Int = 100,
         @Query("page") page: Int = 1,
     ): Result<ResponseDTO<ArticleDTO>>
 }
 
-fun NewsApi(
+fun openNewsApi(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
     json: Json = Json,
@@ -41,12 +42,12 @@ fun NewsApi(
 private fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient?,
-    json: Json = Json,
+    json: Json,
     apiKey: String,
 ): Retrofit {
-    val jsonConverterFactory = json.asConverterFactory(MediaType.get("application/json"))
+    val jsonConverterFactory = json.asConverterFactory("application/json".toMediaType())
 
-    val modifiedOkHttpClient =  (okHttpClient?.newBuilder() ?: OkHttpClient.Builder())
+    val modifiedOkHttpClient = (okHttpClient?.newBuilder() ?: OkHttpClient.Builder())
         .addInterceptor(TimeApiKeyInterceptor(apiKey))
         .build()
 
@@ -58,5 +59,3 @@ private fun retrofit(
         .client(modifiedOkHttpClient)
         .build()
 }
-
-

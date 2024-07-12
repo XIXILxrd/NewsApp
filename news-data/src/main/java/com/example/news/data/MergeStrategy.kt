@@ -1,9 +1,8 @@
 package com.example.news.data
 
 import com.example.news.data.RequestResult.Error
-import com.example.news.data.RequestResult.Success
 import com.example.news.data.RequestResult.Loading
-
+import com.example.news.data.RequestResult.Success
 
 interface MergeStrategy<T> {
     fun merge(right: T, left: T): T

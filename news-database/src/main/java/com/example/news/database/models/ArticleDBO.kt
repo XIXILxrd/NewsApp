@@ -19,6 +19,6 @@ data class ArticleDBO(
     @ColumnInfo("content") val content: String?,
 ) {
     companion object {
-        const val ID_NONE = 0L
+        private const val ID_NONE = 0L
     }
 }

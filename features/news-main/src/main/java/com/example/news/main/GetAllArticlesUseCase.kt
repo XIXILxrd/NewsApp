@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetAllArticlesUseCase @Inject constructor(
     private val repository: ArticleRepository,
 ) {
-    operator fun invoke() = repository.getAll()
+    operator fun invoke(query: String) = repository.getAll(query)
         .map { requestResult -> requestResult.map { articles -> articles.map { it.toArticleUI() } } }
 }

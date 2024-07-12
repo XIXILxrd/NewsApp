@@ -7,11 +7,11 @@ import java.util.Date
 class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: String?): Date? {
-        return value?.let { DateFormat.getDateTimeInstance().parse(it)}
+        return value?.let { DateFormat.getDateTimeInstance().parse(it) }
     }
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): String? {
-        return date?.let { DateFormat.getDateTimeInstance().format(it)}
+        return date?.let { DateFormat.getDateTimeInstance().format(it) }
     }
 }

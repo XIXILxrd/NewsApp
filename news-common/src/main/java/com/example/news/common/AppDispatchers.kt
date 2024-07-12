@@ -1,7 +1,7 @@
 package com.example.news.common
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainCoroutineDispatcher
 
 open class AppDispatchers(

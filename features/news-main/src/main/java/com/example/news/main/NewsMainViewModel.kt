@@ -2,8 +2,6 @@ package com.example.news.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.data.ArticleRepository
-import com.example.news.data.map
 import com.example.news.main.models.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +16,7 @@ internal class NewsMainViewModel @Inject constructor(
     getAllArticlesUseCase: Provider<GetAllArticlesUseCase>
 ) : ViewModel() {
 
-    val state: StateFlow<State> = getAllArticlesUseCase.get().invoke()
+    val state: StateFlow<State> = getAllArticlesUseCase.get().invoke(query = "android")
         .map {
             it.toState()
         }
